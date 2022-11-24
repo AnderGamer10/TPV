@@ -16,5 +16,10 @@ namespace TPV
         {
             InitializeComponent();
         }
+
+        private void tpv_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
