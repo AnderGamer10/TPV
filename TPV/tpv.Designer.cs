@@ -28,25 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.itemsProductos = new System.Windows.Forms.ListBox();
             this.SuspendLayout();
-            // 
-            // itemsProductos
-            // 
-            this.itemsProductos.FormattingEnabled = true;
-            this.itemsProductos.ItemHeight = 15;
-            this.itemsProductos.Location = new System.Drawing.Point(122, 354);
-            this.itemsProductos.Name = "itemsProductos";
-            this.itemsProductos.ScrollAlwaysVisible = true;
-            this.itemsProductos.Size = new System.Drawing.Size(185, 259);
-            this.itemsProductos.TabIndex = 0;
             // 
             // tpv
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1189, 606);
-            this.Controls.Add(this.itemsProductos);
             this.Name = "tpv";
             this.Text = "tpv";
             this.Load += new System.EventHandler(this.tpv_Load);
@@ -55,7 +43,5 @@
         }
 
         #endregion
-
-        private ListBox itemsProductos;
     }
 }
