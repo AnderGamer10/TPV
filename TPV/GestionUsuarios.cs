@@ -92,15 +92,6 @@ namespace TPV
             MySqlCommand cmd = new MySqlCommand("DELETE FROM Usuarios WHERE Nombre_Usuario= '" + nombreUsuario + "'", myCon);
             cmd.ExecuteReader();
         }
-        private void anyadirUsuario()
-        {
-            MySqlConnection myCon = new MySqlConnection(cadenaConexion);
-            myCon.Open();
-
-            MySqlCommand cmd = new MySqlCommand("INSERT INTO usuarios (Nombre_Usuario, Password, Rol) VALUES('" + addTxtName.Text + "', '" + addTxtPasswd.Text + "', '" + addComboRol.Text + "');", myCon);
-            cmd.ExecuteReader();
-            listUsuarios.Items.Add(addTxtName.Text);
-        }
         private void listUsuarios_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (addTxtName.Text != null || addTxtName.Text != "")
@@ -117,7 +108,18 @@ namespace TPV
 
         private void btnAnadir_Click(object sender, EventArgs e)
         {
-            anyadirUsuario();
+            if (addTxtName.Text == null || addTxtPasswd.Text == null || addComboRol.Text == null)
+            {
+                Microsoft.VisualBasic.Interaction.MsgBox("Rellene todos los campos");
+            }
+            else
+            {
+                MySqlConnection myCon = new MySqlConnection(cadenaConexion);
+                myCon.Open();
+                MySqlCommand cmd = new MySqlCommand("INSERT INTO usuarios (Nombre_Usuario, Password, Rol) VALUES('" + addTxtName.Text + "', '" + addTxtPasswd.Text + "', '" + addComboRol.Text + "');", myCon);
+                cmd.ExecuteReader();
+                listUsuarios.Items.Add(addTxtName.Text);
+            }
         }
     }
 }
