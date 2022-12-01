@@ -35,6 +35,7 @@
             this.label12 = new System.Windows.Forms.Label();
             this.listUsuarios = new System.Windows.Forms.ListBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.modComboRol = new System.Windows.Forms.ComboBox();
             this.btnModificar = new System.Windows.Forms.Button();
             this.modTxtName = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
@@ -50,7 +51,8 @@
             this.label19 = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
             this.btnVolver = new System.Windows.Forms.Button();
-            this.modComboRol = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.modTxtNewName = new System.Windows.Forms.TextBox();
             this.groupUsuarios.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox5.SuspendLayout();
@@ -95,6 +97,7 @@
             // 
             // delTxtName
             // 
+            this.delTxtName.Enabled = false;
             this.delTxtName.Location = new System.Drawing.Point(28, 74);
             this.delTxtName.Name = "delTxtName";
             this.delTxtName.Size = new System.Drawing.Size(151, 23);
@@ -122,6 +125,8 @@
             // 
             // groupBox5
             // 
+            this.groupBox5.Controls.Add(this.modTxtNewName);
+            this.groupBox5.Controls.Add(this.label1);
             this.groupBox5.Controls.Add(this.modComboRol);
             this.groupBox5.Controls.Add(this.btnModificar);
             this.groupBox5.Controls.Add(this.modTxtName);
@@ -131,23 +136,37 @@
             this.groupBox5.Controls.Add(this.modTxtPasswd);
             this.groupBox5.Location = new System.Drawing.Point(425, 61);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(205, 173);
+            this.groupBox5.Size = new System.Drawing.Size(205, 199);
             this.groupBox5.TabIndex = 12;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Modificar Usuario";
             // 
+            // modComboRol
+            // 
+            this.modComboRol.Enabled = false;
+            this.modComboRol.FormattingEnabled = true;
+            this.modComboRol.Items.AddRange(new object[] {
+            "administrator",
+            "user"});
+            this.modComboRol.Location = new System.Drawing.Point(87, 124);
+            this.modComboRol.Name = "modComboRol";
+            this.modComboRol.Size = new System.Drawing.Size(112, 23);
+            this.modComboRol.TabIndex = 11;
+            // 
             // btnModificar
             // 
-            this.btnModificar.Location = new System.Drawing.Point(87, 126);
+            this.btnModificar.Location = new System.Drawing.Point(87, 159);
             this.btnModificar.Name = "btnModificar";
             this.btnModificar.Size = new System.Drawing.Size(112, 23);
             this.btnModificar.TabIndex = 11;
             this.btnModificar.Text = "Modificar";
             this.btnModificar.UseVisualStyleBackColor = true;
+            this.btnModificar.Click += new System.EventHandler(this.btnModificar_Click);
             // 
             // modTxtName
             // 
-            this.modTxtName.Location = new System.Drawing.Point(87, 25);
+            this.modTxtName.Enabled = false;
+            this.modTxtName.Location = new System.Drawing.Point(87, 22);
             this.modTxtName.Name = "modTxtName";
             this.modTxtName.Size = new System.Drawing.Size(112, 23);
             this.modTxtName.TabIndex = 17;
@@ -155,16 +174,16 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(15, 28);
+            this.label13.Location = new System.Drawing.Point(6, 28);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(51, 15);
+            this.label13.Size = new System.Drawing.Size(77, 15);
             this.label13.TabIndex = 11;
-            this.label13.Text = "Nombre";
+            this.label13.Text = "Seleccionado";
             // 
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(15, 61);
+            this.label14.Location = new System.Drawing.Point(6, 94);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(67, 15);
             this.label14.TabIndex = 12;
@@ -173,7 +192,7 @@
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(15, 94);
+            this.label15.Location = new System.Drawing.Point(6, 127);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(24, 15);
             this.label15.TabIndex = 13;
@@ -182,7 +201,7 @@
             // modTxtPasswd
             // 
             this.modTxtPasswd.Enabled = false;
-            this.modTxtPasswd.Location = new System.Drawing.Point(87, 58);
+            this.modTxtPasswd.Location = new System.Drawing.Point(87, 91);
             this.modTxtPasswd.Name = "modTxtPasswd";
             this.modTxtPasswd.Size = new System.Drawing.Size(112, 23);
             this.modTxtPasswd.TabIndex = 16;
@@ -275,16 +294,22 @@
             this.btnVolver.UseVisualStyleBackColor = true;
             this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click);
             // 
-            // modComboRol
+            // label1
             // 
-            this.modComboRol.FormattingEnabled = true;
-            this.modComboRol.Items.AddRange(new object[] {
-            "administrator",
-            "user"});
-            this.modComboRol.Location = new System.Drawing.Point(87, 91);
-            this.modComboRol.Name = "modComboRol";
-            this.modComboRol.Size = new System.Drawing.Size(112, 23);
-            this.modComboRol.TabIndex = 11;
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 58);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(51, 15);
+            this.label1.TabIndex = 18;
+            this.label1.Text = "Nombre";
+            // 
+            // modTxtNewName
+            // 
+            this.modTxtNewName.Enabled = false;
+            this.modTxtNewName.Location = new System.Drawing.Point(87, 55);
+            this.modTxtNewName.Name = "modTxtNewName";
+            this.modTxtNewName.Size = new System.Drawing.Size(112, 23);
+            this.modTxtNewName.TabIndex = 19;
             // 
             // GestionUsuarios
             // 
@@ -332,5 +357,7 @@
         private Button btnVolver;
         private ComboBox addComboRol;
         private ComboBox modComboRol;
+        private TextBox modTxtNewName;
+        private Label label1;
     }
 }

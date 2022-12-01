@@ -24,7 +24,7 @@ namespace TPV
 
         private void btnSalir_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+            Application.Restart();
         }
 
         private void btnUsuarios_Click(object sender, EventArgs e)

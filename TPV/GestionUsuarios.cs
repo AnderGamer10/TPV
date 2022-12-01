@@ -1,4 +1,5 @@
-﻿using MySqlConnector;
+﻿using Microsoft.VisualBasic;
+using MySqlConnector;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace TPV
 {
@@ -77,11 +79,8 @@ namespace TPV
                     {
                         listUsuarios.Text = "";
                     }
-                }
-                
+                }    
             }
-
-
         }
 
         private void eliminarUsuario(string nombreUsuario)
@@ -103,12 +102,35 @@ namespace TPV
             {
                 modTxtName.Text = item.ToString();
                 delTxtName.Text = item.ToString();
+                modTxtNewName.Enabled = true;
+                modTxtPasswd.Enabled = true;
+                modComboRol.Enabled = true;
             }
         }
 
         private void btnAnadir_Click(object sender, EventArgs e)
         {
-            if (addTxtName.Text == null || addTxtPasswd.Text == null || addComboRol.Text == null)
+            if (addTxtName.Text.Trim().Length < 1 || addTxtPasswd.Text.Trim().Length < 1 || addComboRol.Text.Trim().Length < 1)
+            {
+                Microsoft.VisualBasic.Interaction.MsgBox("Rellene todos los campos");
+            }
+            else if (listUsuarios.Items.Contains(addTxtName.Text))
+            {
+                Microsoft.VisualBasic.Interaction.MsgBox("Ya existe");
+            }
+            else
+            {
+                MySqlConnection myCon = new MySqlConnection(cadenaConexion);
+                myCon.Open();
+                MySqlCommand cmd = new MySqlCommand("INSERT INTO usuarios (Nombre_Usuario, Password, Rol) VALUES('" + addTxtName.Text.Trim() + "', '" + addTxtPasswd.Text.Trim() + "', '" + addComboRol.Text.Trim() + "');", myCon);
+                cmd.ExecuteReader();
+                listUsuarios.Items.Add(addTxtName.Text.Trim());
+            }
+        }
+
+        private void btnModificar_Click(object sender, EventArgs e)
+        {
+            if(modTxtNewName.Text.Trim().Length < 1 || modTxtPasswd.Text.Trim().Length < 1 || modComboRol.Text.Trim().Length < 1)
             {
                 Microsoft.VisualBasic.Interaction.MsgBox("Rellene todos los campos");
             }
@@ -116,10 +138,11 @@ namespace TPV
             {
                 MySqlConnection myCon = new MySqlConnection(cadenaConexion);
                 myCon.Open();
-                MySqlCommand cmd = new MySqlCommand("INSERT INTO usuarios (Nombre_Usuario, Password, Rol) VALUES('" + addTxtName.Text + "', '" + addTxtPasswd.Text + "', '" + addComboRol.Text + "');", myCon);
+                MySqlCommand cmd = new MySqlCommand("UPDATE Usuarios SET Nombre_Usuario = '" + modTxtNewName.Text.Trim() + "', Password = '" + modTxtPasswd.Text.Trim() + "', Rol = '" + modComboRol.Text.Trim() + "' WHERE Nombre_Usuario = '" + modTxtName.Text.Trim() + "';", myCon);
                 cmd.ExecuteReader();
-                listUsuarios.Items.Add(addTxtName.Text);
+                Microsoft.VisualBasic.Interaction.MsgBox("Los datos han sido actualizados");
             }
+            
         }
     }
 }
