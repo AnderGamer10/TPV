@@ -33,43 +33,30 @@ namespace TPV
 
                 MySqlDataAdapter myadapter = new MySqlDataAdapter("SELECT COUNT(*) FROM usuarios WHERE Nombre_Usuario='" + txtUsuario.Text + "' AND Password='" + txtContra.Text + "'", myCon);
 
+
                 DataTable dt = new DataTable();
                 myadapter.Fill(dt);
-                
                 if (dt.Rows[0][0].ToString() == "1")
                 {
+                    MySqlDataAdapter myadapter2 = new MySqlDataAdapter("SELECT * FROM usuarios WHERE Nombre_Usuario='" + txtUsuario.Text + "' AND Password='" + txtContra.Text + "'", myCon);
+                    DataTable dt2 = new DataTable();
+                    myadapter2.Fill(dt2);
+                    string rolVal = dt2.Rows[0][3].ToString();
                     Hide();
-                    new PanelAdmin().Show();
-                    /*if (dt.Rows[0][3].Equals("administrator"))
-                    {
-                        new PanelAdmin().Show();
-                    }
-                    else
-                    {
-                        new tpv().Show();
-                    }*/
-                    /*foreach (DataRow row in dt.Rows)
-                    {
-                        string rol = row["Rol"].ToString();
-                    }
-                    if (rol.Equals("administrator"))
-                    {
-                        new PanelAdmin().Show();
-                    }
-                    else
-                    {
-                        new tpv().Show();
-                    }*/
-
+                    new PanelDeGestion(rolVal, cadenaConexion).Show();
                 }
                 else
                     MessageBox.Show("Usuario o contraseña no valida");
-                //label1.Text = "Bien";
             }
             catch (Exception error)
             {
                 //label1.Text = "Error de conexion " + error;
             }
+        }
+
+        private void txtUsuario_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
