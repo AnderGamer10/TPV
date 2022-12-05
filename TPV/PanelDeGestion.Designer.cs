@@ -66,13 +66,13 @@
             // 
             // btnTickets
             // 
-            this.btnTickets.Enabled = false;
             this.btnTickets.Location = new System.Drawing.Point(44, 201);
             this.btnTickets.Name = "btnTickets";
             this.btnTickets.Size = new System.Drawing.Size(125, 117);
             this.btnTickets.TabIndex = 2;
             this.btnTickets.Text = "Tickets";
             this.btnTickets.UseVisualStyleBackColor = true;
+            this.btnTickets.Click += new System.EventHandler(this.btnTickets_Click);
             // 
             // PanelDeGestion
             // 

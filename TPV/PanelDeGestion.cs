@@ -20,22 +20,24 @@ namespace TPV
             this.rolVal = rolVal;
             this.cadenaConexion = cadenaConexion;
             InitializeComponent();
+
         }
 
         private void btnSalir_Click(object sender, EventArgs e)
         {
-            Application.Restart();
+            Close();
+            new Login().Show();
         }
 
         private void btnUsuarios_Click(object sender, EventArgs e)
         {
-            Hide();
+            Close();
             new GestionUsuarios(rolVal, cadenaConexion).Show();
         }
 
         private void btnProductos_Click(object sender, EventArgs e)
         {
-            Hide();
+            Close();
             new GestionProductos(rolVal, cadenaConexion).Show();
         }
 
@@ -47,6 +49,12 @@ namespace TPV
                 btnProductos.Width = 295;
                 btnProductos.Left = 44;
             }
+        }
+
+        private void btnTickets_Click(object sender, EventArgs e)
+        {
+            Close();
+            new Tickets(rolVal, cadenaConexion).Show();
         }
     }
 }

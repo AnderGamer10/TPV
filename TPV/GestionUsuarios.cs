@@ -31,7 +31,7 @@ namespace TPV
 
         private void btnVolver_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
             new PanelDeGestion(rolVal, cadenaConexion).Show();
         }
 
