@@ -26,7 +26,7 @@ namespace TPV
                 string server = "localhost";
                 string database = "tpv";
                 string user = "root";
-                string pwd = "admin";
+                string pwd = "admin"; //admin en clase / root en casa
                 string cadenaConexion = "server=" + server + ";database=" + database + ";" + "Uid=" + user + ";pwd=" + pwd + ";";
                 MySqlConnection myCon = new MySqlConnection(cadenaConexion);
                 myCon.Open();

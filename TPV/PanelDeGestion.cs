@@ -49,6 +49,12 @@ namespace TPV
                 btnProductos.Width = 295;
                 btnProductos.Left = 44;
             }
+            if (rolVal.Equals("administrator"))
+            {
+                btnTickets.Visible = false;
+                btnSalir.Width = 295;
+                btnSalir.Left = 44;
+            }
         }
 
         private void btnTickets_Click(object sender, EventArgs e)

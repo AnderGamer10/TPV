@@ -13,13 +13,16 @@ using System.Diagnostics;
 using iTextSharp.text.pdf;
 using iTextSharp.text;
 using Document = iTextSharp.text.Document;
+using System.Collections;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ProgressBar;
 
 namespace TPV
 {
     public partial class Tickets : Form
     {
-        string rolVal;
-        string cadenaConexion;
+        private string rolVal;
+        private string cadenaConexion;
+        private List<Producto> listaProductos = new List<Producto>();
         public Tickets(string rolVal, string cadenaConexion)
         {
             this.rolVal = rolVal;
@@ -37,7 +40,6 @@ namespace TPV
             myadapter.Fill(dt);
             foreach (DataRow dr in dt.Rows)
             {
-                //System.Diagnostics.Debug.WriteLine(dr["Articulo"]);
                 listProductos.Items.Add(dr["Articulo"]);
             }
         }
@@ -65,24 +67,39 @@ namespace TPV
                     if (item.ToString().Equals(listProductos.SelectedItem))
                     {
                         cantidadElegida++;
-                        
                     }
                 }
-                System.Diagnostics.Debug.WriteLine(cantidadElegida);
                 if (stock > 0 && cantidadElegida < stock)
                 {
                     listProductosAnyadidos.Items.Add(listProductos.SelectedItem);
+                    if (cantidadElegida == 0)
+                    {
+                        double precio = (double)dr["Precio"] + ((double)dr["Precio"] * (double)dr["Impuesto"]);
+                        listaProductos.Add(new Producto(listProductos.SelectedItem.ToString(), cantidadElegida+1, precio));
+                    }
+                    else
+                    {
+                        var obj = listaProductos.FirstOrDefault(x => x.Nombre == listProductos.SelectedItem.ToString());
+                        if (obj != null) obj.Cantidad = cantidadElegida + 1;
+                    }
                 }
                 else
                 {
-                    Microsoft.VisualBasic.Interaction.MsgBox("No hay existencias");
-                }
+                    Microsoft.VisualBasic.Interaction.MsgBox("No hay mas existencias");
+                } 
             }
         }
 
         private void btnEliminarProducto_Click(object sender, EventArgs e)
-        { 
-            listProductosAnyadidos.Items.Remove(listProductosAnyadidos.SelectedItem);
+        {
+            if (listProductosAnyadidos.SelectedItem != null)
+            {
+                listProductosAnyadidos.Items.Remove(listProductosAnyadidos.SelectedItem);
+            }
+            else
+            {
+                Microsoft.VisualBasic.Interaction.MsgBox("Seleccione un elemento a eliminar");
+            }
         }
 
         private void btnCrearTicket_Click(object sender, EventArgs e)
@@ -92,17 +109,30 @@ namespace TPV
             FileStream fs = File.Create(path);
             PdfWriter.GetInstance(document, fs);
             document.Open();
-            /*foreach (var item in listProductosAnyadidos.Items)
+            double cantidadTotal = 0;
+            foreach (Producto p in listaProductos)
             {
-                int num = 0;
-                
-                document.Add(new Paragraph(item + " " + num));
-            }*/
-            
-            //document.Add(new Paragraph("Este es mi primer PDF al vuelo"));
+                document.Add(new Paragraph("Nombre: " + p.Nombre + "   Cantidad: " + p.Cantidad + "   Precio+IVA: " + Math.Round(p.Precio, 2) + "€"));
+                cantidadTotal += p.Precio * p.Cantidad;
 
+                MySqlConnection myCon = new MySqlConnection(cadenaConexion);
+                myCon.Open();
+                MySqlDataAdapter myadapter = new MySqlDataAdapter("SELECT * FROM productos WHERE Articulo = '" + listProductos.SelectedItem + "'", myCon);
+                DataTable dt = new DataTable();
+                myadapter.Fill(dt);
+                foreach (DataRow dr in dt.Rows)
+                {
+                    int stock = (int)dr["Stock"];
+                    MySqlCommand sda = new MySqlCommand("UPDATE productos SET Stock = '" + (stock-p.Cantidad) + "' WHERE Articulo = '" + p.Nombre + "'; ", myCon);
+                    sda.ExecuteReader();
+                    myCon.Close();
+                }      
+            }
+            document.Add(new Paragraph("Total a pagar: " + cantidadTotal + "€"));
             document.Close();
-
+            Microsoft.VisualBasic.Interaction.MsgBox("Cuenta creada");
+            Close();
+            new PanelDeGestion(rolVal, cadenaConexion).Show();
         }
-    }
+    }  
 }
